@@ -1,0 +1,20 @@
+server:
+  tomcat:
+    threads:
+      min-spare: 5
+      max: 50
+    connection-timeout: 2s
+    keep-alive-timeout: 15s
+  port: 8888
+spring:
+  application:
+    name: config-serivce
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/LennMueh/config-repo
+          default-label: main
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
