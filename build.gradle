@@ -37,3 +37,8 @@ dependencyManagement {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+bootBuildImage {
+    builder = 'paketobuildpacks/builder-jammy-tiny:latest'
+    imageName = 'catalog-service'
+}
