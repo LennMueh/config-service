@@ -1,16 +1,14 @@
-# Build
+if os.name == 'nt':
+    gradle_cmd = 'gradlew.bat bootBuildImage --imageName %EXPECTED_REF%'
+else:
+    gradle_cmd = './gradlew bootBuildImage --imageName $EXPECTED_REF'
+
 custom_build(
-    # Name of the container image
     ref = 'config-service',
-    # Command to build the container image
-    # On Windows, replace $EXPECTED_REF with %EXPECTED_REF%
-    command = './gradlew bootBuildImage --imageName $EXPECTED_REF',
-    # Files to watch that trigger a new build
+    command = gradle_cmd,
     deps = ['build.gradle', 'src']
 )
 
-# Deploy
 k8s_yaml(['k8s/deployment.yml', 'k8s/service.yml'])
 
-# Manage
 k8s_resource('config-service', port_forwards=['8888'])
